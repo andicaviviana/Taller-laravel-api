@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Book;
+use App\Models\Category;
 
-class BookSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        Book::factory()->count(20)->create();
+        Category::factory()->count(5)->create();
     }
 }

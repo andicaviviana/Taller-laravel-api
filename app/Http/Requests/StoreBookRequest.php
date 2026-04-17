@@ -21,6 +21,10 @@ class StoreBookRequest extends FormRequest
             'book_price' => 'required|numeric|min:0',
             'book_stock' => 'required|integer|min:0',
             'book_status' => 'required|boolean',
+
+            'category_id' => 'required|exists:categories,id',
+
+            'barcode' => 'required|string|max:50',
         ];
     }
 
@@ -32,5 +36,15 @@ class StoreBookRequest extends FormRequest
                 'errors' => $validator->errors()
             ], 422)
         );
+    }
+
+    
+    public function messages(): array
+    {
+        return [
+            'category_id.exists' => 'La categoría seleccionada no existe.',
+            'category_id.required' => 'La categoría es obligatoria.',
+            'barcode.required' => 'El código de barras es obligatorio.',
+        ];
     }
 }

@@ -16,11 +16,15 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'book_name' => 'required|string|max:100',
-            'book_author_name' => 'required|string|max:100',
-            'book_price' => 'required|numeric|min:0',
-            'book_stock' => 'required|integer|min:0',
-            'book_status' => 'required|boolean',
+            'book_name' => 'sometimes|required|string|max:100',
+            'book_author_name' => 'sometimes|required|string|max:100',
+            'book_price' => 'sometimes|required|numeric|min:0',
+            'book_stock' => 'sometimes|required|integer|min:0',
+            'book_status' => 'sometimes|required|boolean',
+
+            'category_id' => 'sometimes|required|exists:categories,id',
+
+            'barcode' => 'sometimes|required|string|max:50',
         ];
     }
 
@@ -32,5 +36,13 @@ class UpdateBookRequest extends FormRequest
                 'errors' => $validator->errors()
             ], 422)
         );
+    }
+    
+    public function messages(): array
+    {
+        return [
+            'category_id.exists' => 'La categoría seleccionada no existe.',
+            'barcode.required' => 'El código de barras es obligatorio.',
+        ];
     }
 }

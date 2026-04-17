@@ -10,11 +10,11 @@ use App\Models\Book;
 class BookController extends Controller
 {
     public function index()
-    {
-        $books = Book::all();
+{
+    $books = Book::with('category')->get();
 
-        return response()->json($books, 200);
-    }
+    return response()->json($books, 200);
+}
 
     public function store(StoreBookRequest $request)
     {
@@ -27,17 +27,17 @@ class BookController extends Controller
     }
 
     public function show(string $id)
-    {
-        $book = Book::find($id);
+{
+    $book = Book::with('category')->find($id);
 
-        if (!$book) {
-            return response()->json([
-                'message' => 'Libro no encontrado'
-            ], 404);
-        }
-
-        return response()->json($book, 200);
+    if (!$book) {
+        return response()->json([
+            'message' => 'Libro no encontrado'
+        ], 404);
     }
+
+    return response()->json($book, 200);
+}
 
     public function update(UpdateBookRequest $request, string $id)
     {
